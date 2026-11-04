@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pathways | Career Explorer</title>
+<style>
+:root{color-scheme:dark;--ink:#fbfaff;--muted:#c9c2e2;--panel:#1b1630;--line:#42365d;--accent:#bdadff}
+*{box-sizing:border-box}
+body{margin:0;background:#100d1d;color:var(--ink);font:16px/1.55 system-ui,sans-serif}
+.wrap,main{max-width:72rem;margin:auto;padding-inline:clamp(1rem,4vw,3rem)}
+.top{padding-block:1rem;border-bottom:1px solid #ffffff45;display:flex;justify-content:space-between;align-items:center;gap:1rem}
+.brand,h1{font-family:"Arial Black",system-ui,sans-serif;font-weight:950;font-style:italic;text-transform:uppercase}
+.brand{letter-spacing:.12em}
+.eyebrow{font-size:.73rem;font-weight:800;letter-spacing:.17em;text-transform:uppercase}
+header{background:repeating-linear-gradient(118deg,#ffffff08 0 1px,transparent 1px 7px),radial-gradient(ellipse at 85% 75%,#7151da,#3c228e 60%,#281761)}
+.hero{padding-block:clamp(2.75rem,7vw,5rem)}
+h1{font-size:clamp(2.5rem,7.5vw,6rem);line-height:.95;letter-spacing:-.06em;margin:.65rem 0 1rem}
+.hero p{max-width:37rem;color:#f0eaff;margin-bottom:0}
+main{padding-block:1.5rem 4rem;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:1rem;align-items:start}
+form,section{background:var(--panel);border:1px solid var(--line);border-radius:1rem;padding:clamp(1rem,3vw,1.65rem);min-width:0}
+main .eyebrow{color:var(--accent)}
+h2{font-size:1.55rem;margin:.25rem 0}
+p{color:var(--muted)}
+fieldset{border:0;padding:0;margin:0 0 1.25rem;min-width:0}
+legend,summary{font-weight:750}
+legend{margin-bottom:.45rem}
+fieldset label{display:inline-flex;align-items:center;gap:.35rem;padding:.38rem .65rem;margin:0 .35rem .4rem 0;border:1px solid var(--line);border-radius:2rem;cursor:pointer}
+fieldset label:has(:checked){background:#3e2a72;border-color:var(--accent)}
+input{accent-color:#ad96ff}
+button{border:0;border-radius:.75rem;padding:.75rem 1.1rem;background:#f5f0ff;color:#281761;font:inherit;font-weight:800;cursor:pointer}
+button[type=reset]{background:#3b266e;color:white}
+button:hover{filter:brightness(1.15)}
+:focus-visible{outline:2px solid #ded4ff;outline-offset:3px}
+article{margin-top:.85rem;padding:1rem;border:1px solid var(--line);border-radius:.8rem;background:#241c3d}
+h3{margin:0;font-size:1.15rem}
+article p{margin:.4rem 0}
+details{margin-top:.7rem}
+summary{color:var(--accent);cursor:pointer}
+ol{padding-left:1.5rem}
+li{margin-block:.5rem}
+@media(max-width:700px){main{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap top"><span class="brand">Pathways</span><span class="eyebrow">Career explorer</span></div>
+  <div class="wrap hero">
+    <span class="eyebrow">Student career studio</span>
+    <h1>Find a path<br>worth trying.</h1>
+    <p>Turn what you study, practice, and enjoy into concrete career next steps.</p>
+  </div>
+</header>
+<main>
+  <form id="assessment">
+    <span class="eyebrow">01 / Your profile</span>
+    <h2>Your assessment</h2>
+    <p>Pick your major. Add any coursework, skills, or activities you recognize. You can explore with just your major.</p>
+    <label for="major">Your major</label>
+    <select id="major" required disabled><option value="">Choose a major</option></select>
+    <div id="signals"></div>
+    <button>Find paths</button> <button type="reset">Clear</button>
+  </form>
+  <section aria-labelledby="career-paths">
+    <span class="eyebrow">02 / Your options</span>
+    <h2 id="career-paths">Career paths</h2>
+    <p id="message" role="status"></p>
+    <div id="results"></div>
+  </section>
+</main>
+<script src="app.js"></script>
+</body>
+</html>
