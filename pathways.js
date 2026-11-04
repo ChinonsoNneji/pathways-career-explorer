@@ -107,4 +107,27 @@ const additionalRoles = [
 for (const [major, name, signals, steps] of additionalRoles) {
   pathways.push({ major, name, signals: signals.split("|"), steps: steps.split("|") });
 }
+const newRoles = [[0,"HVAC design","Thermodynamics|Fluid mechanics|Heat transfer","Model a building cooling load","Equipment schedule and load calculations"],
+  [0,"Reliability engineering","Statistics|Materials|Machine design","Analyze a sample bearing failure","Failure analysis and a preventive maintenance plan"],
+  [0,"Product design engineering","CAD|Machine design|Materials","Redesign a hand tool for easier assembly","CAD files, drawings, and an assembly test"],
+  [0,"Test engineering","Instrumentation|Statistics|Materials","Build a repeatable sensor test fixture","Test protocol, plots, and uncertainty analysis"],
+  [1,"Application security","Programming|Web security|Networking","Complete authorized web security practice labs","Finding, reproduction steps, and remediation"],
+  [1,"Cloud security","Operating systems|Networking|Cloud computing","Audit permissions in a sandbox cloud environment","Threat model and before-and-after access policy"],
+  [1,"Identity and access management","Operating systems|Networking|Access control","Build a role-based access demo with test accounts","Permission matrix and access test cases"],
+  [2,"Site reliability engineering","Operating systems|Networking|Scripting","Add alerts and recovery procedures to a demo service","Service objectives, dashboard, and incident report"],
+  [2,"Platform engineering","Operating systems|Cloud computing|Git","Create a reusable application deployment template","Template repository and developer onboarding guide"],
+  [2,"QA automation","Programming|Statistics|Git","Automate regression checks for a small app","CI run, coverage report, and documented failure cases"],
+  [2,"Distributed systems engineering","Algorithms|Networking|Operating systems","Build a replicated queue and simulate a failed worker","Architecture diagram and failure test results"]];
+for (const [major, name, topics, project, evidence] of newRoles) {
+  const coursework = topics.split("|");
+  for (const topic of coursework) if (!["CAD", "Git", "Scripting"].includes(topic)) courses.add(topic);
+  pathways.push({
+    major: majors[major], name, signals: coursework, evidence,
+    steps: [`Study ${coursework.join(", ")}.`, project + ".", "Show employers your " + evidence.toLowerCase() + "."]
+  });
+}
+for (const role of pathways) {
+  role.coursework = role.signals.filter((signal) => courses.has(signal));
+  role.evidence ??= role.steps[1] + " Share the artifact, your decisions, and the result.";
+}
 module.exports = { pathways, majors, courses, activities };

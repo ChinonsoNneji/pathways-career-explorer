@@ -11,6 +11,11 @@ const form = document.querySelector("#assessment");
 const results = document.querySelector("#results");
 const message = document.querySelector("#message");
 const major = document.querySelector("#major");
+const settings = document.querySelector("#settings");
+const tools = document.querySelector("#profile-tools");
+const comparison = document.querySelector("#comparison");
+const opportunities = document.querySelector("#opportunities");
+const compared = new Map();
 
 function add(parent, tag, value) {
   const element = document.createElement(tag);
@@ -26,6 +31,50 @@ function checkbox(parent, text, checked) {
   input.checked = checked;
   label.append(" " + text);
   return input;
+}
+
+function link(parent, name, url) {
+  add(parent, "a", name).href = url;
+}
+
+function showMajor() {
+  const selected = Boolean(profile.major);
+  document.querySelector("#profile-title").textContent = profile.major || "Choose your major";
+  settings.open = !selected;
+  settings.querySelector("summary").hidden = !selected;
+  tools.hidden = !selected;
+  opportunities.hidden = !selected;
+  const list = opportunities.querySelector("ul");
+  list.replaceChildren();
+  for (const [name, url] of resources[profile.major]?.links ?? []) link(add(list, "li"), name, url);
+}
+
+function showComparison() {
+  comparison.replaceChildren();
+  comparison.hidden = compared.size === 0;
+  for (const path of compared.values()) {
+    const card = add(comparison, "article");
+    add(card, "h3", path.name);
+    const remove = add(card, "button", "Remove from comparison");
+    remove.addEventListener("click", () => {
+      compared.delete(path.name);
+      showComparison();
+    });
+    add(card, "h4", "Courses and portfolio");
+    add(card, "p", path.coursework.join(", ") || "See roadmap foundations.");
+    add(card, "p", path.evidence);
+    const data = resources[path.major];
+    add(card, "h4", "U.S. occupation benchmark");
+    add(card, "p", data.occupation + " · " + data.median + " median annual pay (May 2025)");
+    if (data.mean) link(add(card, "p"), data.mean + " mean annual pay", "https://www.bls.gov/news.release/ocwage.t01.htm");
+    add(card, "p", data.openings + " projected annual openings · " + data.growth + " projected growth, 2025–35.");
+    link(add(card, "p"), "BLS occupation data", data.source);
+    add(card, "h4", "Hiring and layoffs");
+    add(card, "p", "Industry context only · " + data.industry + " · July–September 2026 · thousands, seasonally adjusted.");
+    link(add(card, "p"), "Monthly hires " + data.hires.join(" / "), "https://www.bls.gov/news.release/jolts.t02.htm");
+    link(add(card, "p"), "Monthly layoffs and discharges " + data.layoffs.join(" / "), "https://www.bls.gov/news.release/jolts.t05.htm");
+    add(card, "p", "Role-specific layoffs and job security estimates are unavailable.");
+  }
 }
 
 function save() {
@@ -81,6 +130,16 @@ async function render() {
     add(article, "h3", path.name);
     add(article, "p", reasons.length ? "Why it matches: " + reasons.join(", ") : "Explore this role within your major.");
     if (path.related) add(article, "p", "Related paths: " + path.related);
+    const compare = add(article, "button", "Compare role");
+    compare.addEventListener("click", () => {
+      if (!compared.has(path.name) && compared.size === 2) {
+        message.textContent = "Remove a role from the comparison before adding another.";
+        return;
+      }
+      compared.set(path.name, path);
+      showComparison();
+      message.textContent = compared.size === 1 ? "Choose one more role to compare." : "Comparison ready above the catalog.";
+    });
     const roadmap = add(article, "details");
     const summary = add(roadmap, "summary");
     const list = add(roadmap, "ol");
@@ -117,8 +176,15 @@ form.addEventListener("reset", (event) => {
   save();
 });
 major.addEventListener("change", () => {
+  if (!major.value) {
+    major.value = profile.major || "";
+    return;
+  }
   profile.major = major.value;
   profile.signals = [];
+  compared.clear();
+  showComparison();
+  showMajor();
   renderSignals();
   render();
   save();
@@ -129,10 +195,12 @@ async function initialize() {
     const response = await fetch("/api/v1/assessment");
     if (!response.ok) throw new Error("Assessment unavailable");
     assessment = await response.json();
-    for (const name of Object.keys(assessment)) add(major, "option", name);
+    for (const name of Object.keys(assessment)) add(major, "option", name).value = name;
     major.value = Object.hasOwn(assessment, profile.major) ? profile.major : "";
     if (!major.value) delete profile.major;
     major.disabled = false;
+    showMajor();
+    showComparison();
     renderSignals();
     render();
   } catch {

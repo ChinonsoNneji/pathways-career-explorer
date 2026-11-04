@@ -39,6 +39,12 @@ details{margin-top:.7rem}
 summary{color:var(--accent);cursor:pointer}
 ol{padding-left:1.5rem}
 li{margin-block:.5rem}
+select{max-width:100%;padding:.55rem;border:1px solid var(--line);border-radius:.5rem;font:inherit}
+#profile-tools,#opportunities,#comparison{margin-block:1rem}
+#comparison{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.6rem}
+#comparison article{margin:0}
+[hidden]{display:none!important}
+a{color:var(--accent)}
 @media(max-width:700px){main{grid-template-columns:1fr}}
 </style>
 </head>
@@ -54,20 +60,29 @@ li{margin-block:.5rem}
 <main>
   <form id="assessment">
     <span class="eyebrow">01 / Your profile</span>
-    <h2>Your assessment</h2>
-    <p>Pick your major. Add any coursework, skills, or activities you recognize. You can explore with just your major.</p>
-    <label for="major">Your major</label>
-    <select id="major" required disabled><option value="">Choose a major</option></select>
-    <div id="signals"></div>
-    <button>Find paths</button> <button type="reset">Clear</button>
+    <h2 id="profile-title">Choose your major</h2>
+    <details id="settings">
+      <summary>Settings · Change major</summary>
+      <label for="major">Your major</label>
+      <select id="major" required disabled><option value="">Choose a major</option></select>
+    </details>
+    <details id="profile-tools" hidden>
+      <summary>Refine my matches</summary>
+      <p>Add any coursework, skills, or activities you recognize.</p>
+      <div id="signals"></div>
+      <button>Update matches</button> <button type="reset">Clear</button>
+    </details>
   </form>
   <section aria-labelledby="career-paths">
     <span class="eyebrow">02 / Your options</span>
     <h2 id="career-paths">Career paths</h2>
     <p id="message" role="status"></p>
+    <div id="comparison"></div>
+    <details id="opportunities" hidden><summary>External courses, projects, and conventions</summary><ul></ul></details>
     <div id="results"></div>
   </section>
 </main>
+<script src="resources.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

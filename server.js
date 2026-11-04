@@ -2,10 +2,13 @@ const http = require("node:http");
 const { readFile } = require("node:fs/promises");
 const { join } = require("node:path");
 const { pathways, majors, courses, activities } = require("./pathways");
+const { session, saveProfile, listRoles } = require("./database");
 const supported = new Set(pathways.flatMap((path) => path.signals));
 const assets = new Map([
-  ["/", ["index.html", "text/html"]],
-  ["/app.js", ["app.js", "text/javascript"]]
+  ["/", ["ui/dist/index.html", "text/html"]],
+  ["/favicon.svg", ["ui/dist/favicon.svg", "image/svg+xml"]],
+  ["/app.js", ["app.js", "text/javascript"]],
+  ["/resources.js", ["resources.js", "text/javascript"]]
 ]);
 
 function json(response, status, data) {
@@ -17,11 +20,22 @@ function json(response, status, data) {
 }
 
 http.createServer(async (request, response) => {
-  const asset = assets.get(request.url);
+  if (request.url === "/api/v1/profile" && request.method === "GET") {
+    return json(response, 200, { profile: session(request, response).profile });
+  }
+  const bundled = /^\/assets\/[\w-]+\.(js|css)$/.exec(request.url);
+  const asset = bundled
+    ? ["ui/dist" + request.url, bundled[1] === "js" ? "text/javascript" : "text/css"]
+    : assets.get(request.url);
   if (asset && request.method === "GET") {
     const [file, type] = asset;
     try {
-      const content = await readFile(join(__dirname, file));
+      const content = await readFile(join(__dirname, file)).catch((error) => {
+        if (request.url === "/" && error.code === "ENOENT") {
+          return readFile(join(__dirname, "index.html"));
+        }
+        throw error;
+      });
       response.writeHead(200, { "Content-Type": type + "; charset=utf-8" });
       response.end(content);
     } catch {
@@ -31,7 +45,7 @@ http.createServer(async (request, response) => {
   }
   if (request.url === "/api/v1/assessment" && request.method === "GET") {
     return json(response, 200, Object.fromEntries(majors.map((major) => {
-      const signals = [...new Set(pathways.filter((path) => path.major === major).flatMap((path) => path.signals))];
+      const signals = [...new Set(listRoles(major).flatMap((path) => path.signals))];
       return [major, {
         Coursework: signals.filter((signal) => courses.has(signal)),
         Skills: signals.filter((signal) => !courses.has(signal) && !activities.has(signal)),
@@ -39,12 +53,13 @@ http.createServer(async (request, response) => {
       }];
     })));
   }
-  if (request.url !== "/api/v1/recommendations") {
+  const profileRoute = request.url === "/api/v1/profile";
+  if (!profileRoute && request.url !== "/api/v1/recommendations") {
     return json(response, 404, { error: "Unknown route" });
   }
-  if (request.method !== "POST") {
-    response.setHeader("Allow", "POST");
-    return json(response, 405, { error: "Use POST" });
+  if (request.method !== (profileRoute ? "PUT" : "POST")) {
+    response.setHeader("Allow", profileRoute ? "GET, PUT" : "POST");
+    return json(response, 405, { error: "Unsupported method" });
   }
   let body = "";
   request.setEncoding("utf8");
@@ -56,14 +71,28 @@ http.createServer(async (request, response) => {
         return json(response, 413, { error: "Request too large" });
       }
     }
-    const { signals, major } = JSON.parse(body) ?? {};
+    const data = JSON.parse(body);
+    if (profileRoute) {
+      const { major, selected, saved, compare, completed, name, onboarded } = data ?? {};
+      const strings = (value) => Array.isArray(value) && value.every((item) => typeof item === "string");
+      if (![null, "mechanical", "cybersecurity", "computer-science"].includes(major) ||
+          !strings(selected) || !strings(saved) || !strings(compare) || compare.length > 2 ||
+          typeof name !== "string" || name.length > 100 || typeof onboarded !== "boolean" ||
+          !completed || typeof completed !== "object" || Array.isArray(completed) ||
+          !Object.values(completed).every((steps) => Array.isArray(steps) && steps.every((step) => typeof step === "boolean"))) {
+        return json(response, 400, { error: "Invalid student profile" });
+      }
+      const { id } = session(request, response);
+      saveProfile(id, { major, selected, saved, compare, completed, name, onboarded });
+      return json(response, 200, { saved: true });
+    }
+    const { signals, major } = data ?? {};
     if ((major !== undefined && !majors.includes(major)) ||
         !Array.isArray(signals) || !signals.every((signal) => supported.has(signal))) {
       return json(response, 400, { error: "Expected an array of supported signals" });
     }
     const selected = new Set(signals);
-    const matches = pathways
-      .filter((path) => major === undefined || path.major === major)
+    const matches = listRoles(major)
       .map(({ signals: criteria, ...path }) => ({
         path,
         reasons: criteria.filter((signal) => selected.has(signal)),
