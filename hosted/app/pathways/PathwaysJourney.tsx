@@ -833,7 +833,7 @@ export default function PathwaysJourney({ profile, signedOut = false }: { profil
         <ComparePage
           roles={
             student.compare
-              .map((title) => roleList.find((role) => role.title === title && role.major === student.major))
+              .map((title) => roleList.find((role) => role.title === title && (!student.major || role.major === student.major)))
               .filter(Boolean) as Career[]
           }
           onBack={() => window.history.back()}
