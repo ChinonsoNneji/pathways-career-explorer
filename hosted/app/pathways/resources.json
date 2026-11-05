@@ -1,0 +1,95 @@
+{
+  "Mechanical engineering": {
+    "occupation": "Mechanical engineers",
+    "median": "$104,110",
+    "openings": "17,800",
+    "growth": "11%",
+    "source": "https://www.bls.gov/ooh/architecture-and-engineering/mechanical-engineers.htm",
+    "industry": "Durable goods manufacturing",
+    "hires": [
+      179,
+      193,
+      174
+    ],
+    "layoffs": [
+      47,
+      52,
+      56
+    ],
+    "links": [
+      [
+        "MIT OpenCourseWare · Mechanical engineering",
+        "https://ocw.mit.edu/search/?d=Mechanical+Engineering"
+      ],
+      [
+        "Formula SAE · Student vehicle design project",
+        "https://www.fsaeonline.com/"
+      ],
+      [
+        "ASME IMECE · November 8–12, 2026 · Vancouver",
+        "https://event.asme.org/IMECE"
+      ]
+    ]
+  },
+  "Cybersecurity": {
+    "occupation": "Information security analysts",
+    "median": "$129,180",
+    "openings": "14,100",
+    "growth": "21%",
+    "source": "https://www.bls.gov/ooh/computer-and-information-technology/information-security-analysts.htm",
+    "industry": "Information",
+    "hires": [
+      62,
+      70,
+      94
+    ],
+    "layoffs": [
+      38,
+      42,
+      46
+    ],
+    "links": [
+      [
+        "PortSwigger Web Security Academy · Courses and authorized labs",
+        "https://portswigger.net/web-security"
+      ],
+      [
+        "RSA Conference · April 5–8, 2027",
+        "https://www.rsaconference.com/usa"
+      ]
+    ]
+  },
+  "Computer science": {
+    "occupation": "Software developers",
+    "median": "$135,980",
+    "mean": "$148,100",
+    "openings": "95,300",
+    "growth": "10.2%",
+    "source": "https://www.bls.gov/emp/tables/occupational-projections-and-characteristics.htm",
+    "industry": "Information",
+    "hires": [
+      62,
+      70,
+      94
+    ],
+    "layoffs": [
+      38,
+      42,
+      46
+    ],
+    "links": [
+      [
+        "Harvard CS50x · Computer science and final project",
+        "https://cs50.harvard.edu/x/"
+      ],
+      [
+        "GitHub Learn · Hands-on repository projects",
+        "https://skills.github.com/"
+      ],
+      [
+        "KubeCon + CloudNativeCon · November 8–11, 2027 · New Orleans",
+        "https://www.cncf.io/kubecon-cloudnativecon-events/"
+      ]
+    ]
+  }
+}

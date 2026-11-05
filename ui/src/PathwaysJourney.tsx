@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react"
+import Discovery from "./Discovery"
 import {
   allRoleData,
   majors,
@@ -10,7 +11,7 @@ import {
   type SignalGroup,
 } from "./pathwaysData"
 
-type Page = "welcome" | "home" | "assessment" | "results" | "catalog" | "compare" | "role" | "roadmaps" | "profile"
+type Page = "discovery" | "welcome" | "home" | "assessment" | "results" | "catalog" | "compare" | "role" | "roadmaps" | "profile"
 
 export type StudentState = {
   onboarded: boolean
@@ -285,7 +286,7 @@ export default function PathwaysJourney({ profile }: { profile: StudentState | n
   const saveQueue = useRef(Promise.resolve())
   const [saveFailed, setSaveFailed] = useState(false)
   const [page, setPage] = useState<Page>(() =>
-    student.major ? "catalog" : "assessment",
+    location.hash === "#discovery" || !student.major ? "discovery" : "catalog",
   )
   const [activeRole, setActiveRole] = useState<string>("")
   const [assessmentStep, setAssessmentStep] = useState(1)
@@ -520,6 +521,15 @@ export default function PathwaysJourney({ profile }: { profile: StudentState | n
   return (
     <main className="app-shell">
       <AppHeader page={page} navigate={navigate} />
+      {page !== "discovery" && <div className="page-wrap discovery-entry">
+        <button className="outline-button" onClick={() => navigate("discovery")}>Discover from coursework</button>
+      </div>}
+      <div hidden={page !== "discovery"}>
+        <Discovery onOpenRole={openRole} onBrowse={() => {
+          setAssessmentStep(1)
+          navigate(student.major ? "catalog" : "assessment")
+        }} />
+      </div>
 
       {page === "home" && (
         <section className="dashboard page-wrap">

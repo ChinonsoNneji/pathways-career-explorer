@@ -681,3 +681,12 @@ button:disabled { cursor: not-allowed; opacity: .38; transform: none !important;
   .reset-confirm { align-items: stretch; flex-direction: column; }
   footer { padding: 36px 20px; }
 }
+
+.discovery { max-width: 72rem; padding-block: 2rem 4rem; }
+.discovery h1 { font-family: "Archivo Black", sans-serif; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; max-width: 17ch; margin-block: .65rem; }
+.discovery .settings-card { margin-block: 1rem; }
+.discovery textarea { display: block; width: 100%; margin-block: .4rem 1rem; padding: .75rem; border: 1px solid var(--line); border-radius: .75rem; background: var(--ink); }
+.discovery label { display: block; margin-block: .75rem; }
+.discovery button { margin: .35rem .35rem .35rem 0; }
+.discovery-sources summary { cursor: pointer; font-weight: 700; }
+.discovery-entry { padding-block: .6rem; }

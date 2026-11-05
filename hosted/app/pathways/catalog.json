@@ -1,0 +1,495 @@
+[
+  {
+    "name": "Digital forensics",
+    "signals": [
+      "Linux",
+      "Puzzles",
+      "Investigations"
+    ],
+    "related": "Incident response and malware analysis",
+    "steps": [
+      "Practice Linux permissions and command-line navigation.",
+      "Analyze a sample disk image and write an evidence timeline.",
+      "Try a forensics challenge with a campus cybersecurity club."
+    ],
+    "major": "Cybersecurity",
+    "coursework": [
+      "Linux"
+    ],
+    "evidence": "Analyze a sample disk image and write an evidence timeline. Share the artifact, your decisions, and the result."
+  },
+  {
+    "name": "Data engineering",
+    "signals": [
+      "SQL",
+      "Python",
+      "Data and databases",
+      "Organizing messy information"
+    ],
+    "related": "Database engineering and cloud infrastructure",
+    "steps": [
+      "Practice SQL joins and Python data ingestion.",
+      "Build a pipeline that loads public data into a database.",
+      "Document how your pipeline handles bad data and ask an engineer for feedback."
+    ],
+    "major": "Computer science",
+    "coursework": [],
+    "evidence": "Build a pipeline that loads public data into a database. Share the artifact, your decisions, and the result."
+  },
+  {
+    "name": "Automotive engineering",
+    "signals": [
+      "Calculus",
+      "CAD",
+      "Automotive technology",
+      "Comparing how vehicles work"
+    ],
+    "related": "Robotics and manufacturing",
+    "steps": [
+      "Study mechanics and model a component in CAD.",
+      "Document the design constraints and results of a test.",
+      "Explore a campus vehicle design team or engineering club."
+    ],
+    "major": "Mechanical engineering",
+    "coursework": [
+      "Calculus"
+    ],
+    "evidence": "Document the design constraints and results of a test. Share the artifact, your decisions, and the result."
+  },
+  {
+    "name": "Network engineering",
+    "signals": [
+      "Linux",
+      "Networking",
+      "Troubleshooting"
+    ],
+    "related": "Network security and cloud networking",
+    "steps": [
+      "Practice routing, subnetting, and switching fundamentals.",
+      "Build a virtual network lab and document how you troubleshoot it.",
+      "Use CCNA topics to identify gaps and practice explaining your lab to an employer."
+    ],
+    "major": "Cybersecurity",
+    "coursework": [
+      "Linux",
+      "Networking"
+    ],
+    "evidence": "Build a virtual network lab and document how you troubleshoot it. Share the artifact, your decisions, and the result."
+  },
+  {
+    "major": "Computer science",
+    "name": "Software engineering",
+    "signals": [
+      "Programming",
+      "Git",
+      "Building things people can use"
+    ],
+    "steps": [
+      "Build a small app",
+      "Add tests",
+      "Publish a demo"
+    ],
+    "coursework": [
+      "Programming"
+    ],
+    "evidence": "Add tests Share the artifact, your decisions, and the result."
+  },
+  {
+    "major": "Computer science",
+    "name": "Cloud engineering",
+    "signals": [
+      "Operating systems",
+      "Linux",
+      "Setting up tools for a group"
+    ],
+    "steps": [
+      "Deploy a web app",
+      "Configure monitoring",
+      "Practice restoring a backup"
+    ],
+    "coursework": [
+      "Operating systems",
+      "Linux"
+    ],
+    "evidence": "Configure monitoring Share the artifact, your decisions, and the result."
+  },
+  {
+    "major": "Computer science",
+    "name": "Cloud infrastructure",
+    "signals": [
+      "Networking",
+      "Linux",
+      "Planning how parts fit together"
+    ],
+    "steps": [
+      "Draw a cloud network",
+      "Provision a test environment",
+      "Document access controls"
+    ],
+    "coursework": [
+      "Networking",
+      "Linux"
+    ],
+    "evidence": "Provision a test environment Share the artifact, your decisions, and the result."
+  },
+  {
+    "major": "Computer science",
+    "name": "DevOps",
+    "signals": [
+      "Git",
+      "Scripting",
+      "Automating repetitive tasks"
+    ],
+    "steps": [
+      "Write a build script",
+      "Set up continuous integration",
+      "Practice a rollback"
+    ],
+    "coursework": [],
+    "evidence": "Set up continuous integration Share the artifact, your decisions, and the result."
+  },
+  {
+    "major": "Computer science",
+    "name": "Machine learning",
+    "signals": [
+      "Statistics",
+      "Python",
+      "Spotting patterns"
+    ],
+    "steps": [
+      "Train a baseline model",
+      "Measure errors on held-out data",
+      "Document failure cases"
+    ],
+    "coursework": [
+      "Statistics"
+    ],
+    "evidence": "Measure errors on held-out data Share the artifact, your decisions, and the result."
+  },
+  {
+    "major": "Mechanical engineering",
+    "name": "Robotics and automation",
+    "signals": [
+      "Controls",
+      "CAD",
+      "Automating repetitive tasks"
+    ],
+    "steps": [
+      "Simulate a feedback loop",
+      "Prototype a motion mechanism",
+      "Test it under different loads"
+    ],
+    "coursework": [
+      "Controls"
+    ],
+    "evidence": "Prototype a motion mechanism Share the artifact, your decisions, and the result."
+  },
+  {
+    "major": "Mechanical engineering",
+    "name": "Manufacturing engineering",
+    "signals": [
+      "Materials",
+      "CAD",
+      "Making a process more efficient"
+    ],
+    "steps": [
+      "Compare manufacturing methods",
+      "Design a simple fixture",
+      "Measure repeatability"
+    ],
+    "coursework": [
+      "Materials"
+    ],
+    "evidence": "Design a simple fixture Share the artifact, your decisions, and the result."
+  },
+  {
+    "major": "Mechanical engineering",
+    "name": "Thermal engineering",
+    "signals": [
+      "Thermodynamics",
+      "Calculus",
+      "Testing why something fails"
+    ],
+    "steps": [
+      "Model heat transfer",
+      "Measure a cooling system",
+      "Compare predictions against measurements"
+    ],
+    "coursework": [
+      "Thermodynamics",
+      "Calculus"
+    ],
+    "evidence": "Measure a cooling system Share the artifact, your decisions, and the result."
+  },
+  {
+    "major": "Cybersecurity",
+    "name": "Network forensics",
+    "signals": [
+      "Networking",
+      "Packet analysis",
+      "Reconstructing what happened"
+    ],
+    "steps": [
+      "Capture lab traffic",
+      "Trace a connection in a packet capture",
+      "Write an evidence timeline"
+    ],
+    "coursework": [
+      "Networking"
+    ],
+    "evidence": "Trace a connection in a packet capture Share the artifact, your decisions, and the result."
+  },
+  {
+    "major": "Cybersecurity",
+    "name": "Network infrastructure",
+    "signals": [
+      "Networking",
+      "Linux",
+      "Planning how parts fit together"
+    ],
+    "steps": [
+      "Design a segmented network",
+      "Configure routing and access rules",
+      "Test failures and recovery"
+    ],
+    "coursework": [
+      "Networking",
+      "Linux"
+    ],
+    "evidence": "Configure routing and access rules Share the artifact, your decisions, and the result."
+  },
+  {
+    "major": "Cybersecurity",
+    "name": "Incident response",
+    "signals": [
+      "Linux",
+      "Troubleshooting",
+      "Reconstructing what happened"
+    ],
+    "steps": [
+      "Analyze sample alerts",
+      "Run a tabletop exercise",
+      "Write a response playbook"
+    ],
+    "coursework": [
+      "Linux"
+    ],
+    "evidence": "Run a tabletop exercise Share the artifact, your decisions, and the result."
+  },
+  {
+    "major": "Mechanical engineering",
+    "name": "HVAC design",
+    "signals": [
+      "Thermodynamics",
+      "Fluid mechanics",
+      "Heat transfer"
+    ],
+    "evidence": "Equipment schedule and load calculations",
+    "steps": [
+      "Study Thermodynamics, Fluid mechanics, Heat transfer.",
+      "Model a building cooling load.",
+      "Show employers your equipment schedule and load calculations."
+    ],
+    "coursework": [
+      "Thermodynamics",
+      "Fluid mechanics",
+      "Heat transfer"
+    ]
+  },
+  {
+    "major": "Mechanical engineering",
+    "name": "Reliability engineering",
+    "signals": [
+      "Statistics",
+      "Materials",
+      "Machine design"
+    ],
+    "evidence": "Failure analysis and a preventive maintenance plan",
+    "steps": [
+      "Study Statistics, Materials, Machine design.",
+      "Analyze a sample bearing failure.",
+      "Show employers your failure analysis and a preventive maintenance plan."
+    ],
+    "coursework": [
+      "Statistics",
+      "Materials",
+      "Machine design"
+    ]
+  },
+  {
+    "major": "Mechanical engineering",
+    "name": "Product design engineering",
+    "signals": [
+      "CAD",
+      "Machine design",
+      "Materials"
+    ],
+    "evidence": "CAD files, drawings, and an assembly test",
+    "steps": [
+      "Study CAD, Machine design, Materials.",
+      "Redesign a hand tool for easier assembly.",
+      "Show employers your cad files, drawings, and an assembly test."
+    ],
+    "coursework": [
+      "Machine design",
+      "Materials"
+    ]
+  },
+  {
+    "major": "Mechanical engineering",
+    "name": "Test engineering",
+    "signals": [
+      "Instrumentation",
+      "Statistics",
+      "Materials"
+    ],
+    "evidence": "Test protocol, plots, and uncertainty analysis",
+    "steps": [
+      "Study Instrumentation, Statistics, Materials.",
+      "Build a repeatable sensor test fixture.",
+      "Show employers your test protocol, plots, and uncertainty analysis."
+    ],
+    "coursework": [
+      "Instrumentation",
+      "Statistics",
+      "Materials"
+    ]
+  },
+  {
+    "major": "Cybersecurity",
+    "name": "Application security",
+    "signals": [
+      "Programming",
+      "Web security",
+      "Networking"
+    ],
+    "evidence": "Finding, reproduction steps, and remediation",
+    "steps": [
+      "Study Programming, Web security, Networking.",
+      "Complete authorized web security practice labs.",
+      "Show employers your finding, reproduction steps, and remediation."
+    ],
+    "coursework": [
+      "Programming",
+      "Web security",
+      "Networking"
+    ]
+  },
+  {
+    "major": "Cybersecurity",
+    "name": "Cloud security",
+    "signals": [
+      "Operating systems",
+      "Networking",
+      "Cloud computing"
+    ],
+    "evidence": "Threat model and before-and-after access policy",
+    "steps": [
+      "Study Operating systems, Networking, Cloud computing.",
+      "Audit permissions in a sandbox cloud environment.",
+      "Show employers your threat model and before-and-after access policy."
+    ],
+    "coursework": [
+      "Operating systems",
+      "Networking",
+      "Cloud computing"
+    ]
+  },
+  {
+    "major": "Cybersecurity",
+    "name": "Identity and access management",
+    "signals": [
+      "Operating systems",
+      "Networking",
+      "Access control"
+    ],
+    "evidence": "Permission matrix and access test cases",
+    "steps": [
+      "Study Operating systems, Networking, Access control.",
+      "Build a role-based access demo with test accounts.",
+      "Show employers your permission matrix and access test cases."
+    ],
+    "coursework": [
+      "Operating systems",
+      "Networking",
+      "Access control"
+    ]
+  },
+  {
+    "major": "Computer science",
+    "name": "Site reliability engineering",
+    "signals": [
+      "Operating systems",
+      "Networking",
+      "Scripting"
+    ],
+    "evidence": "Service objectives, dashboard, and incident report",
+    "steps": [
+      "Study Operating systems, Networking, Scripting.",
+      "Add alerts and recovery procedures to a demo service.",
+      "Show employers your service objectives, dashboard, and incident report."
+    ],
+    "coursework": [
+      "Operating systems",
+      "Networking"
+    ]
+  },
+  {
+    "major": "Computer science",
+    "name": "Platform engineering",
+    "signals": [
+      "Operating systems",
+      "Cloud computing",
+      "Git"
+    ],
+    "evidence": "Template repository and developer onboarding guide",
+    "steps": [
+      "Study Operating systems, Cloud computing, Git.",
+      "Create a reusable application deployment template.",
+      "Show employers your template repository and developer onboarding guide."
+    ],
+    "coursework": [
+      "Operating systems",
+      "Cloud computing"
+    ]
+  },
+  {
+    "major": "Computer science",
+    "name": "QA automation",
+    "signals": [
+      "Programming",
+      "Statistics",
+      "Git"
+    ],
+    "evidence": "CI run, coverage report, and documented failure cases",
+    "steps": [
+      "Study Programming, Statistics, Git.",
+      "Automate regression checks for a small app.",
+      "Show employers your ci run, coverage report, and documented failure cases."
+    ],
+    "coursework": [
+      "Programming",
+      "Statistics"
+    ]
+  },
+  {
+    "major": "Computer science",
+    "name": "Distributed systems engineering",
+    "signals": [
+      "Algorithms",
+      "Networking",
+      "Operating systems"
+    ],
+    "evidence": "Architecture diagram and failure test results",
+    "steps": [
+      "Study Algorithms, Networking, Operating systems.",
+      "Build a replicated queue and simulate a failed worker.",
+      "Show employers your architecture diagram and failure test results."
+    ],
+    "coursework": [
+      "Algorithms",
+      "Networking",
+      "Operating systems"
+    ]
+  }
+]
