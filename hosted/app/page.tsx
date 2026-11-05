@@ -17,14 +17,7 @@ export default function Home() {
       .catch(() => { if (!controller.signal.aborted) setError("load"); });
     return () => controller.abort();
   }, []);
-  if (error === "signin") return (
-    <main className="page-wrap discovery">
-      <span className="detail-label">Pathways</span>
-      <h1>Discover where your strengths could take you.</h1>
-      <p>Explore careers from your coursework, compare paths, and build a practical roadmap. Sign in to keep your profile and progress across devices.</p>
-      <a className="primary-button dark" href="/signin-with-chatgpt?return_to=%2F" target="_top">Sign in with ChatGPT</a>
-    </main>
-  );
+  if (error === "signin") return <PathwaysJourney profile={null} signedOut />;
   if (error) return <main className="page-wrap"><p>Could not load your profile.</p><button onClick={() => location.reload()}>Retry</button></main>;
   if (profile === undefined) return <main className="page-wrap" role="status">Loading Pathways…</main>;
   return <PathwaysJourney profile={profile} />;

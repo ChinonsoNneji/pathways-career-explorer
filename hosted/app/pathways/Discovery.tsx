@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { ArrowRight, Upload, FileText, Check } from "lucide-react"
 import { allRoleData, majors, roleExtras } from "./pathwaysData"
 
 type Course = { name: string; grade: string; points: number }
@@ -70,73 +71,94 @@ export default function Discovery({
 
   return (
     <section className="page-wrap discovery">
-      <span className="detail-label">Pathways discovery</span>
-      <h1>See where your coursework could take you.</h1>
-      <p>Start with classes you’ve taken. We’ll suggest paths and give you a small way to try the work.</p>
-      <details className="settings-card discovery-sources">
-        <summary>Data sources</summary>
-        <p><strong>Coursework</strong> · {courses.length ? `${courses.length} courses read in this tab` : "Ready for a CSV import"}</p>
-        <p><strong>School records</strong> · Connection planned</p>
-        <p><strong>YouTube</strong> · Connection planned</p>
-        <p>Connected sources will show the last sync and the evidence Pathways used. You’ll be able to pause a source or remove its data here.</p>
-      </details>
-      <div className="settings-card">
-        <h2>1. Add coursework</h2>
-        <p>Upload a CSV or paste rows with a course name and letter grade. Coursework stays in this tab.</p>
-        <label>Course CSV <input type="file" accept=".csv,text/csv" onChange={async (event) => {
-          const file = event.target.files?.[0]
-          if (!file) return
-          try {
-            if (file.size > 100_000) throw new Error("Choose a CSV smaller than 100 KB.")
-            const input = await file.text()
-            setSource(input)
-            review(input)
-          } catch (cause) {
-            setReviewed(false)
-            setCourses([])
-            setError((cause as Error).message)
-          }
-        }} /></label>
-        <label>Course rows <textarea rows={5} value={source} placeholder="Computer Networks,A" onChange={(event) => {
-          setSource(event.target.value)
-          setCourses([])
-          setReviewed(false)
-          setError("")
-        }} /></label>
-        <div className="toolbar-actions">
-          <button className="primary-button dark" onClick={() => review(source)}>Review courses</button>
-          <button className="outline-button" onClick={() => { setSource(sample); review(sample) }}>Try sample transcript</button>
-        </div>
-        {error && <p role="alert">{error}</p>}
+      <div className="page-intro">
+        <p className="eyebrow"><span>Pathways discovery</span></p>
+        <h1>Your coursework.<br /><em>New directions.</em></h1>
+        <p className="page-copy">Start with classes you’ve taken. See where your strengths could take you—then try the work for yourself.</p>
       </div>
-      {courses.length > 0 && <div className="settings-card">
-        <h2>2. Confirm your coursework</h2>
-        <ul>{courses.map((course) => <li key={course.name}>{course.name} · {course.grade}</li>)}</ul>
-        <button className="primary-button dark" onClick={() => setReviewed(true)}>Discover paths</button>
+      <div className="discovery-layout">
+        <div className="discovery-import">
+          <span className="detail-label">01 · Start with what you know</span>
+          <h2>Add your coursework.</h2>
+          <p>Upload a CSV or paste a course name and letter grade on each line.</p>
+          <label className="course-upload">
+            <Upload size={22} aria-hidden="true" />
+            <span><strong>Choose a course CSV</strong><small>Course name + letter grade · up to 100 KB</small></span>
+            <input type="file" accept=".csv,text/csv" onChange={async (event) => {
+              const file = event.target.files?.[0]
+              if (!file) return
+              try {
+                if (file.size > 100_000) throw new Error("Choose a CSV smaller than 100 KB.")
+                const input = await file.text()
+                setSource(input)
+                review(input)
+              } catch (cause) {
+                setReviewed(false)
+                setCourses([])
+                setError((cause as Error).message)
+              }
+            }} />
+          </label>
+          <label className="course-rows">Or paste course rows
+            <textarea rows={5} value={source} placeholder={"Computer Networks,A\nOperating Systems,A-"} onChange={(event) => {
+              setSource(event.target.value)
+              setCourses([])
+              setReviewed(false)
+              setError("")
+            }} />
+          </label>
+          <div className="discovery-actions">
+            <button className="primary-button dark" onClick={() => review(source)}>Review courses <ArrowRight size={18} /></button>
+            <button className="discovery-sample" onClick={() => { setSource(sample); review(sample) }}>Try sample transcript</button>
+          </div>
+          {error && <p className="discovery-error" role="alert">{error}</p>}
+        </div>
+        <aside className="discovery-aside">
+          <div className="discovery-note">
+            <FileText size={24} aria-hidden="true" />
+            <h2>Evidence, not a quiz.</h2>
+            <p>Your classes are a starting point, not a prediction. Review what we read, explore why a path appeared, and choose a small project to try.</p>
+            <span className="sample-label">Coursework stays in this tab</span>
+          </div>
+          <details className="resource-disclosure discovery-sources">
+            <summary>Data sources</summary>
+            <div className="source-row"><strong>Coursework</strong><span>{courses.length ? `${courses.length} courses reviewed` : "CSV import available"}</span></div>
+            <div className="source-row"><strong>School records</strong><span>Connection planned</span></div>
+            <div className="source-row"><strong>YouTube</strong><span>Connection planned</span></div>
+            <p>School and YouTube connections are not active. Imported coursework is temporary and disappears on reload.</p>
+          </details>
+          <button className="outline-button" onClick={onBrowse}>Browse by major <ArrowRight size={17} /></button>
+        </aside>
+      </div>
+      {courses.length > 0 && <div className="course-review">
+        <div className="discovery-section-heading"><div><p className="eyebrow"><span>02 · Check the evidence</span></p><h2>Does this look right?</h2></div><span className="sample-label">{courses.length} courses</span></div>
+        <ul>{courses.map((course) => <li key={course.name}><span>{course.name}</span><strong>{course.grade}</strong></li>)}</ul>
+        <button className="primary-button" onClick={() => setReviewed(true)}>Discover paths <ArrowRight size={18} /></button>
       </div>}
-      {reviewed && <div aria-live="polite">
-        <h2>3. Try a path</h2>
-        {!matches.length && <p>No clear matches in this catalog yet. Try adding more course titles.</p>}
-        <div className="catalog-grid">{matches.map(({ role, evidence }) => (
-          <article className="settings-card" key={role.title}>
-            <h3>{role.title}</h3>
+      {reviewed && <div className="discovery-results" aria-live="polite">
+        <div className="page-intro"><p className="eyebrow"><span>03 · See what’s possible</span></p><h2>Paths worth <em>exploring.</em></h2><p className="page-copy">A starting list based on your coursework. Try a project to see how the work feels.</p></div>
+        {!matches.length && <div className="empty-state"><h2>No clear matches yet</h2><p>Try adding more course titles, or browse the career catalog.</p><button className="outline-button" onClick={onBrowse}>Browse careers <ArrowRight size={17} /></button></div>}
+        <div className="catalog-grid">{matches.map(({ role, evidence }, index) => (
+          <article className="career-tile discovery-match" key={role.title}>
+            <span className="field">Path 0{index + 1} · {role.field}</span>
+            <h2>{role.title}</h2>
             <p>{role.description}</p>
-            <p><strong>Why it surfaced</strong> · {evidence.map(({ name, grade }) => `${name} (${grade})`).join(", ")}</p>
-            <button className="primary-button dark" onClick={() => setActiveTrial(role.title)}>Try the work</button>
-            {activeTrial === role.title && <div>
+            <div className="match-evidence"><span className="detail-label">Why it surfaced</span><div className="tag-row">{evidence.map(({ name, grade }) => <span key={name}>{name} · {grade}</span>)}</div></div>
+            <button className="outline-button trial-button" aria-expanded={activeTrial === role.title} onClick={() => setActiveTrial(activeTrial === role.title ? "" : role.title)}>Try the work <ArrowRight size={17} /></button>
+            {activeTrial === role.title && <div className="discovery-trial">
               <p>{roleExtras[role.title].project}</p>
               <p><strong>What to make</strong> · {roleExtras[role.title].deliverable}</p>
-              <label>After you try it, would you do more of this?
+              <label>Would you do more of this?
                 <select value={feedback[role.title] ?? ""} onChange={(event) => setFeedback({ ...feedback, [role.title]: event.target.value })}>
                   <option value="">Choose an answer</option><option>Yes</option><option>Maybe</option><option>No</option>
                 </select>
               </label>
+              {feedback[role.title] && <small><Check size={13} /> Feedback noted for this visit.</small>}
             </div>}
-            <button className="outline-button" onClick={() => onOpenRole(role.title)}>Open roadmap</button>
+            <button className="tile-link" onClick={() => onOpenRole(role.title)}>Open roadmap <ArrowRight size={17} /></button>
           </article>
         ))}</div>
       </div>}
-      <button className="outline-button" onClick={onBrowse}>Browse by major</button>
     </section>
   )
 }

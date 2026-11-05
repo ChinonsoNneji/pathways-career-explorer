@@ -682,11 +682,59 @@ button:disabled { cursor: not-allowed; opacity: .38; transform: none !important;
   footer { padding: 36px 20px; }
 }
 
-.discovery { max-width: 72rem; padding-block: 2rem 4rem; }
-.discovery h1 { font-family: "Archivo Black", sans-serif; font-size: clamp(2rem, 6vw, 4rem); line-height: 1; max-width: 17ch; margin-block: .65rem; }
-.discovery .settings-card { margin-block: 1rem; }
-.discovery textarea { display: block; width: 100%; margin-block: .4rem 1rem; padding: .75rem; border: 1px solid var(--line); border-radius: .75rem; background: var(--ink); }
-.discovery label { display: block; margin-block: .75rem; }
-.discovery button { margin: .35rem .35rem .35rem 0; }
-.discovery-sources summary { cursor: pointer; font-weight: 700; }
-.discovery-entry { padding-block: .6rem; }
+/* Discovery uses the same type, surfaces, and rhythm as the Figma journey. */
+.discovery-layout { display: grid; grid-template-columns: minmax(0, 1.45fr) minmax(260px, .7fr); gap: 24px; align-items: start; }
+.discovery-import { padding: 34px; border-radius: 24px; background: var(--violet-pale); color: var(--ink); }
+.discovery-import > h2, .course-review h2, .discovery-note h2 { margin: 18px 0 12px; font-size: 28px; font-weight: 700; letter-spacing: -.04em; line-height: 1.15; }
+.discovery-import > p, .discovery-note p { margin: 0 0 25px; font-size: 14px; line-height: 1.65; opacity: .7; }
+.course-upload { display: flex; align-items: center; gap: 16px; position: relative; padding: 24px 20px; border: 1px dashed rgba(20,15,29,.3); border-radius: 16px; cursor: pointer; background: rgba(255,255,255,.25); }
+.course-upload:hover { border-color: var(--indigo); background: rgba(255,255,255,.5); }
+.course-upload:focus-within { outline: 3px solid var(--indigo); outline-offset: 3px; }
+.course-upload > span { display: flex; flex-direction: column; gap: 6px; }
+.course-upload strong { font-size: 14px; }
+.course-upload small { font-size: 11px; opacity: .6; }
+.course-upload input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.course-rows { display: block; margin: 25px 0; text-transform: uppercase; letter-spacing: .12em; font-size: 10px; font-weight: 700; }
+.course-rows textarea { display: block; width: 100%; min-height: 150px; resize: vertical; margin-top: 12px; padding: 16px; border: 1px solid rgba(20,15,29,.18); border-radius: 12px; background: rgba(255,255,255,.4); color: var(--ink); font-family: 'DM Sans', sans-serif; font-size: 14px; font-weight: 400; line-height: 1.7; text-transform: none; letter-spacing: 0; }
+.course-rows textarea:focus-visible { outline: 3px solid var(--indigo); outline-offset: 2px; }
+.discovery-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
+.discovery-actions .primary-button { width: auto; min-width: 205px; gap: 24px; }
+.discovery-sample { border: 0; padding: 10px 0; background: none; color: var(--ink); font-size: 12px; font-weight: 700; text-decoration: underline; text-underline-offset: 4px; }
+.discovery-import .discovery-error { margin: 20px 0 0; opacity: 1; color: #8c2145; }
+.discovery-aside { display: flex; flex-direction: column; gap: 20px; }
+.discovery-note { padding: 30px; border-radius: 22px; border: 1px solid var(--line); background: #1b1424; }
+.discovery-note > svg { color: var(--violet); }
+.discovery-note p { color: #a79dab; opacity: 1; }
+.discovery-aside > .outline-button { align-self: start; }
+.resource-disclosure { padding: 22px 25px; border: 1px solid rgba(255,255,255,.1); border-radius: 18px; background: #1b1424; color: #a79dab; }
+.resource-disclosure summary { cursor: pointer; font-size: 12px; font-weight: 700; color: var(--white); }
+.resource-disclosure p, .resource-disclosure li { font-size: 12px; line-height: 1.7; }
+.resource-disclosure ul { padding: 0 0 0 18px; margin: 18px 0 0; }
+.resource-disclosure li + li { margin-top: 10px; }
+.resource-disclosure a { color: var(--violet-light); text-decoration: underline; text-underline-offset: 3px; }
+.major-resources { margin: 18px 0 24px; }
+.source-row { padding: 16px 0; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; gap: 5px; font-size: 12px; }
+.source-row:first-of-type { margin-top: 10px; }
+.source-row strong { color: var(--white); }
+.source-row span { font-size: 11px; }
+.course-review { margin-top: 32px; padding: 30px; border: 1px solid var(--line); border-radius: 22px; background: #1b1424; }
+.discovery-section-heading { display: flex; justify-content: space-between; align-items: center; gap: 20px; }
+.course-review ul { list-style: none; padding: 0; margin: 20px 0 25px; }
+.course-review li { display: flex; justify-content: space-between; gap: 20px; padding: 15px 0; border-top: 1px solid var(--line); font-size: 14px; }
+.course-review li strong { color: var(--violet-light); }
+.course-review > .primary-button { width: min(100%, 280px); }
+.discovery-results { margin-top: 70px; }
+.discovery-results .page-intro h2 { margin: 25px 0 0; font-family: 'Archivo Black', sans-serif; font-size: clamp(38px, 5vw, 70px); line-height: .9; letter-spacing: -.065em; text-transform: uppercase; }
+.discovery-results .page-intro h2 em { color: var(--violet); }
+.discovery-match { min-width: 0; }
+.match-evidence { margin: 5px 0 24px; }
+.match-evidence .detail-label { color: var(--violet-light); margin-bottom: 12px; }
+.discovery-match .trial-button { align-self: start; margin-bottom: 24px; }
+.discovery-trial { margin-bottom: 24px; padding-top: 20px; border-top: 1px solid var(--line); }
+.discovery-trial p { font-size: 13px; color: #a79dab; line-height: 1.6; }
+.discovery-trial label { display: block; font-size: 12px; line-height: 1.6; }
+.discovery-trial select { display: block; margin: 10px 0; width: 100%; padding: 12px; border: 1px solid var(--line); border-radius: 10px; background: var(--ink-soft); color: white; }
+.discovery-trial small { display: flex; align-items: center; gap: 6px; color: var(--violet-light); }
+@media (max-width: 1000px) { .discovery-layout { grid-template-columns: 1fr; } .discovery-aside { display: grid; grid-template-columns: 1fr 1fr; align-items: start; } }
+@media (max-width: 760px) { .discovery-import, .course-review { padding: 25px 20px; } .discovery-aside { display: flex; } .discovery-actions { align-items: stretch; flex-direction: column; gap: 8px; } .discovery-actions .primary-button { width: 100%; } .discovery-sample { align-self: center; } .discovery-results { margin-top: 50px; } .course-upload { padding: 20px 16px; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }

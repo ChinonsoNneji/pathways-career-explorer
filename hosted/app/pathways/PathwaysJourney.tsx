@@ -135,6 +135,7 @@ function AppHeader({
 }) {
   const [open, setOpen] = useState(false)
   const links: [Page, string][] = [
+    ["discovery", "Discover"],
     ["home", "Home"],
     ["catalog", "Explore careers"],
     ["roadmaps", "My roadmaps"],
@@ -280,13 +281,13 @@ function EmptyState({
   )
 }
 
-export default function PathwaysJourney({ profile }: { profile: StudentState | null }) {
+export default function PathwaysJourney({ profile, signedOut = false }: { profile: StudentState | null; signedOut?: boolean }) {
   const [student, setStudent] = useState(profile ?? initialStudent)
   const currentStudent = useRef(student)
   const saveQueue = useRef(Promise.resolve())
   const [saveFailed, setSaveFailed] = useState(false)
   const [page, setPage] = useState<Page>(() =>
-    location.hash === "#discovery" || !student.major ? "discovery" : "catalog",
+    signedOut ? "welcome" : location.hash === "#discovery" || !student.major ? "discovery" : "catalog",
   )
   const [activeRole, setActiveRole] = useState<string>("")
   const [assessmentStep, setAssessmentStep] = useState(1)
@@ -314,6 +315,10 @@ export default function PathwaysJourney({ profile }: { profile: StudentState | n
   }, [])
 
   const navigate = (next: Page, role?: string, replace = false) => {
+    if (signedOut) {
+      window.location.assign("/signin-with-chatgpt?return_to=%2F")
+      return
+    }
     if (role) setActiveRole(role)
     setPage(next)
     const method = replace ? "replaceState" : "pushState"
@@ -389,7 +394,7 @@ export default function PathwaysJourney({ profile }: { profile: StudentState | n
   const filteredRoles = useMemo(() => {
     const query = search.trim().toLowerCase()
     return roleList.filter((role) => {
-      const matchesMajor = role.major === student.major
+      const matchesMajor = !student.major || role.major === student.major
       const haystack =
         `${role.title} ${role.field} ${role.description} ${role.tags.join(" ")}`.toLowerCase()
       return matchesMajor && (!query || haystack.includes(query))
@@ -458,11 +463,11 @@ export default function PathwaysJourney({ profile }: { profile: StudentState | n
                   navigate("assessment")
                 }}
               >
-                Start my journey <Icon name="arrow" />
+                {signedOut ? "Sign in with ChatGPT" : "Start my journey"} <Icon name="arrow" />
               </button>
-              <button className="demo-link" onClick={startDemo}>
+              {!signedOut && <button className="demo-link" onClick={startDemo}>
                 Or preview a demo dashboard
-              </button>
+              </button>}
               <span>No quiz score. No wrong answers. About 2 minutes.</span>
             </div>
           </div>
@@ -521,9 +526,6 @@ export default function PathwaysJourney({ profile }: { profile: StudentState | n
   return (
     <main className="app-shell">
       <AppHeader page={page} navigate={navigate} />
-      {page !== "discovery" && <div className="page-wrap discovery-entry">
-        <button className="outline-button" onClick={() => navigate("discovery")}>Discover from coursework</button>
-      </div>}
       <div hidden={page !== "discovery"}>
         <Discovery onOpenRole={openRole} onBrowse={() => {
           setAssessmentStep(1)
@@ -780,6 +782,7 @@ export default function PathwaysJourney({ profile }: { profile: StudentState | n
             <label className="search-box">
               <Icon name="search" />
               <input
+                aria-label="Search careers"
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
                 placeholder="Search roles, skills, or fields"
@@ -788,7 +791,7 @@ export default function PathwaysJourney({ profile }: { profile: StudentState | n
           </div>
           <div className="toolbar-actions">
             <button className="outline-button" onClick={() => {
-              setAssessmentStep(2)
+              setAssessmentStep(student.major ? 2 : 1)
               navigate("assessment")
             }}>Refine my matches</button>
           </div>
@@ -815,7 +818,7 @@ export default function PathwaysJourney({ profile }: { profile: StudentState | n
             <EmptyState
               icon="search"
               title="No roles match that search"
-              copy="Try a broader term or switch to all majors."
+              copy="Try a broader role, skill, or field."
               action="Clear filters"
               onAction={() => {
                 setSearch("")
@@ -1471,7 +1474,7 @@ function ProfilePage({
             <em>Your settings.</em>
           </>
         }
-        copy="Your progress is stored only in this browser for this prototype."
+        copy="Your profile and roadmap progress are saved to your account."
       />
       <div className="settings-grid">
         <section className="settings-card">
@@ -1526,7 +1529,7 @@ function ProfilePage({
           <h2>Start with a clean slate</h2>
           <p>
             This removes your saved roles, roadmap progress, comparison, and
-            assessment from this browser.
+            assessment from your account.
           </p>
           {!confirmReset ? (
             <button
@@ -1568,7 +1571,7 @@ function resourcesFor(major: MajorId) {
 
 function MajorResources({ major }: { major: MajorId }) {
   return (
-    <details className="settings-card major-resources">
+    <details className="resource-disclosure major-resources">
       <summary>External courses, projects, and conventions</summary>
       <ul>
         {resourcesFor(major).links.map(([label, url]) => (
